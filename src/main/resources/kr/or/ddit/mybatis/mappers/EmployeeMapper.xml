@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.employee.dao.EmployeeMapper">
+	<resultMap type="EmployeeVO" id="empMap" autoMapping="true">
+		<association property="oAuth" autoMapping="true"/>
+	</resultMap>
+	<!-- 로그인 관련 -->
+	<select id="selectAccountInfo" resultType="AccountVO" parameterType="AccountVO">
+		SELECT *
+		FROM ACCOUNT
+		WHERE ACCOUNT_MAIL=#{accountMail}
+			AND ACCOUNT_PASS=#{accountPass}
+			AND ACCOUNT_YN='N'
+	</select>
+	
+	<select id="selectEmployeeInfo" resultMap="empMap">
+		SELECT 
+		    EMPLOYEE.EMP_ID
+			, EMPLOYEE.EMP_PASS
+			, EMPLOYEE.EMP_NAME
+			, EMPLOYEE.EMP_BIRTH
+			, EMPLOYEE.EMP_GENDER
+			, EMPLOYEE.EMP_ADDR1
+			, EMPLOYEE.EMP_ADDR2
+			, EMPLOYEE.EMP_PHONE
+			, EMPLOYEE.ACCOUNT_MAIL
+			, EMPLOYEE.EMP_JOIN
+			, EMPLOYEE.EMP_IMG
+			, EMPLOYEE.EMP_SIGNIMG
+			, EMPLOYEE.EMP_STATUS
+			, EMPLOYEE.EMP_VACATION
+			, EMPLOYEE.POSI_ID
+			, EMPLOYEE.SEMP_ID
+		    , TB_OAUTH.OAUTH_ACCESS
+		    , TB_OAUTH.OAUTH_REFRESH
+		    , TB_OAUTH.OAUTH_EMP_EMAIL
+		    
+		FROM EMPLOYEE INNER JOIN TB_OAUTH ON EMPLOYEE.EMP_ID=TB_OAUTH.EMP_ID
+		WHERE EMPLOYEE.ACCOUNT_MAIL=#{empEmail}
+	</select>
+	
+	<select id="selectEmployeeCount" resultType="int" parameterType="EmployeeVO">
+		SELECT COUNT(*)
+		FROM EMPLOYEE
+
+		WHERE 
+			<trim prefixOverrides="AND">
+				<if test="empPass neq null and empName.length gt 0">
+				 AND EMP_PASS=#{empPass,}
+				</if>
+				<if test="empName neq null and empName.length gt 0">
+				 AND EMP_NAME=#{empName,jdbcType=VARCHAR}
+				</if>
+				<if test="empBirth neq null and empBirth.length gt 0">
+				 AND EMP_BIRTH=#{empBirth,jdbcType=DATE}
+				</if>
+				<if test="empGender neq null and empGender.length gt 0">
+				 AND EMP_GENDER=#{empGender,jdbcType=VARCHAR}
+				</if>
+				<if test="empAddr1 neq null and empAddr1.length gt 0">
+				 AND EMP_ADDR1=#{empAddr1,jdbcType=VARCHAR}
+				</if>
+				<if test="empAddr2 neq null and empAddr2.length gt 0">
+				 AND EMP_ADDR2=#{empAddr2,jdbcType=VARCHAR}
+				</if>
+				<if test="empPhone neq null and empPhone.length gt 0">
+				 AND EMP_PHONE=#{empPhone,jdbcType=VARCHAR}
+				</if>
+				<if test="accountMail neq null and accountMail.length gt 0">
+				 AND ACCOUNT_MAIL=#{accountMail,jdbcType=VARCHAR}
+				</if>
+				<if test="empJoin neq null and empJoin.length gt 0">
+				 AND EMP_JOIN=#{empJoin,jdbcType=DATE}
+				</if>
+				<if test="empImg neq null and empImg.length gt 0">
+				 AND EMP_IMG=#{empImg,jdbcType=BLOB}
+				</if>
+				<if test="empSignimg neq null and empSignimg.length gt 0">
+				 AND EMP_SIGNIMG=#{empSignimg,jdbcType=BLOB}
+				</if>
+				<if test="empStatus neq null and empStatus.length gt 0">
+				 AND EMP_STATUS=#{empStatus,jdbcType=VARCHAR}
+				</if>
+				<if test="empVacation neq null and empVacation.length gt 0">
+				 AND EMP_VACATION=#{empVacation,jdbcType=NUMBER}
+				</if>
+				<if test="posiId neq null and posiId.length gt 0">
+				 AND POSI_ID=#{posiId,jdbcType=VARCHAR}
+				</if>
+				<if test="sempId neq null and sempId.length gt 0">
+				 AND SEMP_ID=#{sempId,jdbcType=VARCHAR}
+				</if>
+			</trim>
+	</select>
+	
+	<select id="selectOAuthInfo">
+	
+	</select>
+	
+	<!-- 회원가입관련 -->
+	<select id="selectAccountJoinCheck" resultType="EmployeeVO">
+		SELECT EMPLOYEE.*
+		FROM ACCOUNT 
+			INNER JOIN EMPLOYEE 
+			ON
+			ACCOUNT.ACCOUNT_MAIL = EMPLOYEE.EMP_EMAIL
+		WHERE ACCOUNT.ACCOUNT_MAIL = #{accountMail}
+	</select>
+	
+	<update id="updateEmployee">
+		UPDATE EMPLOYEE
+		SET
+			<trim prefixOverrides=",">
+				<if test="empPass neq null and empName.length gt 0">
+				 , EMP_PASS=#{empPass,jdbcType=VARCHAR}
+				</if>
+				<if test="empName neq null and empName.length gt 0">
+				 , EMP_NAME=#{empName,jdbcType=VARCHAR}
+				</if>
+				<if test="empBirth neq null and empBirth.length gt 0">
+				 , EMP_BIRTH=#{empBirth,jdbcType=DATE}
+				</if>
+				<if test="empGender neq null and empGender.length gt 0">
+				 , EMP_GENDER=#{empGender,jdbcType=VARCHAR}
+				</if>
+				<if test="empAddr1 neq null and empAddr1.length gt 0">
+				 , EMP_ADDR1=#{empAddr1,jdbcType=VARCHAR}
+				</if>
+				<if test="empAddr2 neq null and empAddr2.length gt 0">
+				 , EMP_ADDR2=#{empAddr2,jdbcType=VARCHAR}
+				</if>
+				<if test="empPhone neq null and empPhone.length gt 0">
+				 , EMP_PHONE=#{empPhone,jdbcType=VARCHAR}
+				</if>
+				<if test="accountMail neq null and accountMail.length gt 0">
+				 , ACCOUNT_MAIL=#{accountMail,jdbcType=VARCHAR}
+				</if>
+				<if test="empJoin neq null and empJoin.length gt 0">
+				 , EMP_JOIN=#{empJoin,jdbcType=DATE}
+				</if>
+				<if test="empImg neq null and empImg.length gt 0">
+				 , EMP_IMG=#{empImg,jdbcType=BLOB}
+				</if>
+				<if test="empSignimg neq null and empSignimg.length gt 0">
+				 , EMP_SIGNIMG=#{empSignimg,jdbcType=BLOB}
+				</if>
+				<if test="empStatus neq null and empStatus.length gt 0">
+				 , EMP_STATUS=#{empStatus,jdbcType=VARCHAR}
+				</if>
+				<if test="empVacation neq null and empVacation.length gt 0">
+				 , EMP_VACATION=#{empVacation,jdbcType=NUMBER}
+				</if>
+				<if test="posiId neq null and posiId.length gt 0">
+				 , POSI_ID=#{posiId,jdbcType=VARCHAR}
+				</if>
+				<if test="sempId neq null and sempId.length gt 0">
+				 , SEMP_ID=#{sempId,jdbcType=VARCHAR}
+				</if>
+			</trim>
+		WHERE EMP_ID=#{empId}
+	</update>
+	
+	
+	
+	
+	
+
+</mapper>

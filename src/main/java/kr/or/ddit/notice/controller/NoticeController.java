@@ -1,0 +1,197 @@
+package kr.or.ddit.notice.controller;
+
+import kr.or.ddit.commons.enumpkg.ServiceResult;
+import kr.or.ddit.commons.paging.PaginationInfo;
+import kr.or.ddit.commons.paging.renderer.PaginationRenderer;
+import kr.or.ddit.commons.paging.renderer.renderPagination;
+import kr.or.ddit.commons.validate.InsertGroup;
+import kr.or.ddit.commons.validate.UpdateGroup;
+import kr.or.ddit.notice.service.NoticeService;
+import kr.or.ddit.vo.NoticeVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
+
+@Controller
+@RequestMapping("/{companyId}/notice")
+//이미 여기서 a001이라는 회사코드가 담겨있음 이걸 PathVariable에 담는거임
+public class NoticeController {
+
+    @Autowired
+    private NoticeService service;
+
+    public static final String MODELNAME = "notice";
+
+    // 공지사항 리스트갖고오기
+    // 이제 근데 경로변수를 갖고와서 경로변수에 지정을해야함
+    // 하지만 무턱대고가져와서 쓰기전에 세션에 갖고있는 내 회사명코드와 일치하는지 검증을해야함
+    //나의 세션에서 companyId 꺼내오기
+    //중요함!! 세션을 전역변수로꺼내오면안됨 싱글톤이고 다른사람들도 동시에 쓰기때문에 동시성문제 반드시 발생함.
+//        String sessionCompanyId = (String) session.getAttribute("companyId");
+//
+//        //회사 ID 검증
+//        if(!companyId.equals(sessionCompanyId)) {
+//            return "redirect:/login";
+//        }
+    @GetMapping
+    public String noticeList(
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @ModelAttribute(MODELNAME) NoticeVO detailCondition,
+            Model model) {
+        PaginationInfo<NoticeVO> paging = new PaginationInfo<>();
+        paging.setCurrentPage(page);
+        paging.setDetailCondition(detailCondition);
+
+        List<NoticeVO> noticeList = service.readNoticeList(paging);
+        PaginationRenderer renderer = new renderPagination();
+        String pagingHTML = renderer.renderPagination(paging, null);
+
+        model.addAttribute("noticeList", noticeList);
+        model.addAttribute("pagingHTML", pagingHTML);
+        return "notice/noticeList";
+    }
+
+    //공지사항 세부 조회
+    @GetMapping("/{noticeId}")
+    public String noticeDetail(
+//            @PathVariable("companyId") String companyId,
+            @PathVariable("noticeId") int noticeId,
+            HttpSession session,
+            Model model){
+
+//        String sessionCompanyId = (String) session.getAttribute("companyId");
+//        if(!companyId.equals(sessionCompanyId)) {
+//            return "redirect:/login";
+//        }
+        NoticeVO notice = service.readNoticeDetail(noticeId);
+        model.addAttribute("notice", notice);
+        return "notice/noticeDetail";
+
+    }
+
+    //공지사항 등록 폼 이동
+    @GetMapping("/new")
+    public String newNoticeForm(@ModelAttribute(MODELNAME) NoticeVO notice) {
+        return "notice/noticeForm";
+    }
+    //공지사항 등록 처리
+    @PostMapping
+    public String createNotice(
+//            @PathVariable("companyId") String companyId,
+            @Validated(InsertGroup.class) @ModelAttribute(MODELNAME) NoticeVO notice,
+            HttpSession session,
+            Errors errors,
+            RedirectAttributes redirectAttributes){
+
+        String companyId = (String) session.getAttribute("companyId");
+
+        String lvn = null;
+        redirectAttributes.addFlashAttribute(MODELNAME, notice);
+
+        if (!errors.hasErrors()){
+            ServiceResult result = service.createNotice(notice);
+            switch (result){
+                case OK:
+                    lvn = "redirect:/work2gether/" + companyId + "/notice";
+                    break;
+                case FAIL:
+                    lvn = "redirect:/work2gether/" + companyId + "/notice/new";
+                    redirectAttributes.addFlashAttribute("message", "서버 오류입니다. 다시 시도해주세요");
+                    break;
+                default:
+                    lvn = "redirect:/work2gether/" + companyId + "/notice/new";
+                    redirectAttributes.addFlashAttribute("message", "알 수 없는 오류가 발생했습니다.");
+                    break;
+            }
+        } else {
+            // 유효성 검사 실패인 경우 기존 데이터를 가지고 등록 폼으로 리다이렉트
+            String errAttrName = BindingResult.MODEL_KEY_PREFIX + MODELNAME;
+            redirectAttributes.addFlashAttribute(errAttrName, errors);
+            lvn = "redirect:/work2gether/" + companyId + "/notice/new";
+        }
+        return lvn;
+    }
+
+    //공지사항 수정 폼 이동
+    @GetMapping("/{noticeId}/edit")
+    public String editNoticeForm(
+            @PathVariable("noticeId") int noticeId,
+            Model model){
+        //기존 데이터 먼저 갖고와야하니까
+        NoticeVO notice = service.readNoticeDetail(noticeId);
+        //담아서 보내기
+        model.addAttribute(MODELNAME, notice);
+        return "notice/noticeEdit";
+    }
+
+    //공지사항 수정처리
+    @PostMapping("/{noticeId}")
+    public String updateNotice(
+            @PathVariable("noticeId") int noticeId,
+            @Validated(UpdateGroup.class) @ModelAttribute(MODELNAME) NoticeVO notice,
+            HttpSession session,
+            Errors errors,
+            RedirectAttributes redirectAttributes) {
+
+        String lvn = null;
+        String companyId = (String) session.getAttribute("companyId");
+
+        if (!errors.hasErrors()) {
+            ServiceResult result = service.modifyNotice(notice);
+            switch (result) {
+                case OK:
+                    lvn = "redirect:/work2gether/" + companyId + "/notice/" + noticeId;
+                    break;
+                case FAIL:
+                    lvn = "redirect:/work2gether/" + companyId + "/notice/" + noticeId + "/edit";
+                    redirectAttributes.addFlashAttribute("message", "서버 오류입니다. 다시 시도해주세요");
+                    break;
+                default:
+                    lvn = "redirect:/work2gether/" + companyId + "/notice/" + noticeId + "/edit";
+                    redirectAttributes.addFlashAttribute("message", "알 수 없는 오류가 발생했습니다.");
+                    break;
+            }
+        } else {
+            // 유효성 검사 실패인 경우 기존 데이터를 가지고 등록 폼으로 리다이렉트
+            String errAttrName = BindingResult.MODEL_KEY_PREFIX + MODELNAME;
+            redirectAttributes.addFlashAttribute(errAttrName, errors);
+            lvn = "redirect:/work2gether/" + companyId + "/notice/edit";
+        }
+        return lvn;
+    }
+
+    //공지사항 삭제처리
+    @PostMapping("/{noticeId}/delete")
+    public String deleteNotice(
+            @PathVariable("noticeId") int noticeId,
+            HttpSession session,
+            Errors errors,
+            RedirectAttributes redirectAttributes){
+
+        String lvn = null;
+        String companyId = (String) session.getAttribute("companyId");
+
+        ServiceResult result = service.removeNotice(noticeId);
+        switch (result) {
+            case OK:
+                lvn = "redirect:/work2gether/" + companyId + "notice";
+                redirectAttributes.addFlashAttribute("message", "삭제 완료되었습니다.");
+                break;
+            case FAIL:
+                lvn = "redirect:/work2gether/" + companyId + "notice/" + noticeId;
+                redirectAttributes.addFlashAttribute("message", "서버 오류입니다. 다시 시도해주세요");
+                break;
+        }
+
+        return lvn;
+
+    }
+}

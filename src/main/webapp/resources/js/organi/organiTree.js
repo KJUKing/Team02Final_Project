@@ -1,0 +1,59 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.getElementById('organiTree').addEventListener("click", async(e) => {
+
+        const target = e.target.closest(".lastTeam");
+        if(target){
+            const teamId = target.getAttribute("data-team-id"); // TEAM ID 가져오기 
+            console.log("클릭한 팀 아디 :" , teamId);
+            console.log("회사아이디 : ", companyId);
+            try{
+                let resp = await fetch(`../../work2gether/companyId/organiEmployee?teamId=${teamId}`,{
+					headers : {
+						"Content-Type" : "application/json"
+					}
+                })
+                if(resp.ok){
+                    const data = await resp.json();
+                    console.log("직원 :",data);
+
+                    employeeList(data);
+                }else{
+                    console.log("에러다 인마" , resp.status);
+                }
+            }catch(error){
+                console.log(error);
+            }
+        } // if(target) 끝
+    }) // organiTree 끝 
+
+
+    function employeeList(empListData){
+        let empList = document.querySelector("#employeeList");
+        empList.innerHTML = "";
+        empList.innerHTML = `
+            <tr>
+                <th>사원번호</th>
+                <th>사원명</th>
+                <th>휴대폰번호</th>
+                <th>입사일자</th>           
+            </tr>
+        `;
+        empListData.forEach(employee => {
+            empList.innerHTML = `
+                <tr>
+                    <td>${employee.empId}</td>
+                    <td>${employee.empName}</td>
+                    <td>${employee.empPhone}</td>
+                    <td>${employee.empJoin}</td>
+                </tr>
+            `;
+        });
+
+
+
+
+    } // function employeeList 끝 
+
+}); // DOM end
