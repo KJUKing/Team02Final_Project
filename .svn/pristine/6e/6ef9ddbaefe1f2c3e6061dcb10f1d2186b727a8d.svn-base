@@ -1,0 +1,92 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<script src="https://cdn.jsdelivr.net/npm/apextree"></script>
+<style>
+#organiTree {
+	position: relative; /* 또는 absolute */
+	display: flex;
+	justify-content: center;
+	position: relative;
+	align-items: center;
+	z-index: 10; /* sidebar보다 높은 값 */
+	border: 1px solid black;
+	width: 1325px;
+	height: 700px;
+	background-color: #f6f6f6;
+/* 	margin: 0 auto; /* 화면 가운데 정렬 */ 
+	margin-bottom : 140px;
+	overflow: hidden;
+}
+
+</style>
+
+
+
+
+<!-- <h4>조직도</h4> -->
+<div class="d-flex justify-content-center align-items-center"
+	style="height: 100vh;">	
+	<div id="organiTree"></div>
+</div>
+<div class="employee-data-container">
+   
+    <table id="employeeList" border="1" style="width: 100%; text-align: center;">
+        <!-- 직원 데이터가 동적으로 렌더링됩니다 -->
+    </table>
+</div>
+
+
+<script> 
+ document.addEventListener("DOMContentLoaded", () => {
+	
+	
+    const data = {
+        id: "CEO",
+        name: "CEO", 
+        children: [] // 하위 부서 데이터를 넣을 배열
+    };
+
+    // 서버에서 전달받은 데이터를 바탕으로 트리 구조 생성
+    <c:forEach items="${organiList}" var="depart">
+    {
+        let departCategory = {
+            id: "${depart.depatId}",
+            name: "${depart.depatName}", 
+            children: [] 
+        };
+
+        <c:forEach items="${depart.teamList}" var="team">
+        var teamCategory = {
+            id: "${team.teamId}",
+            name: `<div class="lastTeam" data-team-id='${team.teamId}'>${team.teamName}</a></div>` 
+        };
+	        departCategory.children.push(teamCategory); 
+	        </c:forEach>
+
+       data.children.push(departCategory); 
+    }
+    </c:forEach>
+
+    // 트리 렌더링 옵션 
+const options = {
+    width: 1325,
+    height: 700,
+    nodeWidth: 200,
+    nodeHeight: 100,
+    childrenSpacing: 50,
+    siblingSpacing: 30,
+    direction: 'top',
+    fitToContainer: true, // 컨테이너에 맞추기 (옵션 지원 여부 확인 필요)
+};
+
+
+    // 트리 생성 및 렌더링
+    const tree = new ApexTree(document.getElementById('organiTree'), options);
+   
+    tree.render(data); // 데이터 렌더링
+}); 
+</script>
+<script>const companyId = "${companyId}"</script>
+<script src="${pageContext.request.contextPath }/resources/js/organi/organiTree.js"></script>

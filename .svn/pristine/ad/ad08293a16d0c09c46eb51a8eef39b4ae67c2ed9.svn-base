@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.employee.dao.EmployeeMapper">
+	<resultMap type="EmployeeVO" id="empMap" autoMapping="true">
+		<association property="oAuth" autoMapping="true"/>
+	</resultMap>
+	
+	
+	<select id="selectEmployee" resultMap="empMap">
+		SELECT EMPLOYEE.*,
+				OAUTH.*
+			FROM EMPLOYEE INNER JOIN OAUTH
+				ON EMPLOYEE.EMP_MAIL = OAUTH.OAUTH_EMPMAIL
+			WHERE EMPLOYEE.EMP_MAIL=#{empMail}
+	</select>
+	
+	<select id="selectEmployeeList" resultMap="empMap">
+		SELECT EMPLOYEE.*,
+			OAUTH.*
+			FROM EMPLOYEE INNER JOIN OAUTH
+				ON EMPLOYEE.EMP_MAIL = OAUTH.OAUTH_EMPMAIL	
+	</select>
+	
+	<select id="selectEmployeeForAuth" resultType="EmployeeVO">
+		SELECT *
+		FROM EMPLOYEE
+		WHERE EMP_MAIL=#{empMail} AND EMP_NAME=#{empName} AND EMP_PHONE=#{empPhone}
+	</select>
+	
+	
+	<insert id="insertEmployee">
+		INSERT INTO EMPLOYEE(EMP_ID, EMP_PASS, EMP_NAME, EMP_MAIL, EMP_JOIN, EMP_STATUS, 
+		POSI_ID, DEPART_CODE, EMP_BIRTH, EMP_GENDER, EMP_PHONE)
+		VALUES(
+			#{empId,jdbcType=VARCHAR}
+			, '1234' <!-- 초기 비밀번호 -->
+			, #{empName,jdbcType=VARCHAR}
+			, #{empMail,jdbcType=VARCHAR}
+			, #{empJoin,jdbcType=DATE}
+			, 'W' <!-- 첫 insert 시에는 W상태 -->
+			, #{posiId,jdbcType=VARCHAR} <!-- 직급아이디 -->
+			, #{departCode,jdbcType=VARCHAR} <!-- 부서아이디 -->
+			, #{empBirth,jdbcType=VARCHAR}
+			, #{empGender,jdbcType=VARCHAR}
+			, #{empPhone,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 
+		emp pass나 account_mail이 업데이트 될 경우 상위 테이블인 account가 먼저 업데이트가 되어야함
+		해당 트리거 필요(넣어뒀음)	
+	-->
+	<update id="updateEmployee">
+		UPDATE EMPLOYEE
+		SET
+			<trim prefixOverrides=",">
+				<if test="empPass neq null and empPass.length gt 0">
+				 , EMP_PASS=#{empPass,jdbcType=VARCHAR}
+				</if>
+				<if test="empName neq null and empName.length gt 0">
+				 , EMP_NAME=#{empName,jdbcType=VARCHAR}
+				</if>
+				<if test="empBirth neq null and empBirth.length gt 0">
+				 , EMP_BIRTH=#{empBirth,jdbcType=VARCHAR}
+				</if>
+				<if test="empGender neq null and empGender.length gt 0">
+				 , EMP_GENDER=#{empGender,jdbcType=VARCHAR}
+				</if>
+				<if test="empAddr1 neq null and empAddr1.length gt 0">
+				 , EMP_ADDR1=#{empAddr1,jdbcType=VARCHAR}
+				</if>
+				<if test="empAddr2 neq null and empAddr2.length gt 0">
+				 , EMP_ADDR2=#{empAddr2,jdbcType=VARCHAR}
+				</if>
+				<if test="empPhone neq null and empPhone.length gt 0">
+				 , EMP_PHONE=#{empPhone,jdbcType=VARCHAR}
+				</if>
+				<if test="empMail neq null and empMail.length gt 0">
+				 , EMP_MAIL=#{empMail,jdbcType=VARCHAR}
+				</if>
+				<if test="empJoin neq null and empJoin.length gt 0">
+				 , EMP_JOIN=#{empJoin,jdbcType=VARCHAR}
+				</if>
+				<if test="empImg neq null and empImg.length gt 0">
+				 , EMP_IMG=#{empImg,jdbcType=BLOB}
+				</if>
+				<if test="empSignimg neq null and empSignimg.length gt 0">
+				 , EMP_SIGNIMG=#{empSignimg,jdbcType=BLOB}
+				</if>
+				<if test="empStatus neq null and empStatus.length gt 0">
+				 , EMP_STATUS=#{empStatus,jdbcType=VARCHAR}
+				</if>
+				<if test="posiId neq null and posiId.length gt 0">
+				 , POSI_ID=#{posiId,jdbcType=VARCHAR}
+				</if>
+				<if test="departCode neq null and departCode.length gt 0">
+				 , DEPART_CODE=#{departCode,jdbcType=VARCHAR}
+				</if>
+			</trim>
+		WHERE EMP_ID=#{empId}
+	</update>
+	
+	<update id="updateEmployeeStatus">
+		UPDATE EMPLOYEE
+		SET EMP_STATUS=#{empStatus}
+		WHERE EMP_MAIL=#{empMail}
+	</update>
+	
+	<delete id="deleteEmployee">
+	
+	</delete>
+	
+	
+	
+	
+	
+
+</mapper>

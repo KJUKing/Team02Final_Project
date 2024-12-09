@@ -1,0 +1,40 @@
+package kr.or.ddit.approval.service;
+
+<<<<<<< .mine
+import kr.or.ddit.approval.vo.ElectronicVO;
+||||||| .r457125
+=======
+import java.util.List;
+
+>>>>>>> .r457146
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.approval.vo.ElectronicVO;
+
+@Service
+public class ElectronicServiceImpl implements ElectronicService {
+    @Override
+    public List<ElectronicVO> readElectronicList(String empId) {
+        return null;
+    }
+
+    @Override
+    public ElectronicVO readElectronicDetail(String electronicId, String empId) {
+        return null;
+    }
+
+    @Override
+    public void createElectronic(ElectronicVO electronicVO) {
+
+    }
+
+    @Override
+    public void modifyElectronic(String electronicId, ElectronicVO electronicVO, String empId) {
+
+    }
+
+    @Override
+    public void removeElectronic(String electronicId, String empId) {
+
+    }
+}

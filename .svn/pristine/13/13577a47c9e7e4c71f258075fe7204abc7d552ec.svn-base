@@ -1,0 +1,39 @@
+package kr.or.ddit.roomTime.controller;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import kr.or.ddit.roomTime.service.RoomTimeService;
+import kr.or.ddit.roomTime.vo.RoomTimeVO;
+
+@Controller
+@RequestMapping("/{companyId}/roomTime")
+public class RoomTimeController {
+	
+	@Inject
+	private RoomTimeService service;
+	
+	public static final String MODELNAME = "roomTime";
+	
+	@ModelAttribute(MODELNAME)
+	   public RoomTimeVO roomTime() {
+	      return new RoomTimeVO();
+	   }
+	
+	
+	
+	@GetMapping("{roomId}")
+	public String getRoomTimeOne(@PathVariable("companyId") String companyId,
+			@PathVariable("roomId") String roomId, Model model) {
+		RoomTimeVO roomTime = service.readRoomTime(roomId);
+		model.addAttribute("roomTime", roomTime);
+		
+		return "room/roomDetail";
+	}
+}

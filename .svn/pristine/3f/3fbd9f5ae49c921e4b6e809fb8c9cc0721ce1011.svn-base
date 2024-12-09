@@ -1,0 +1,283 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.getElementById('organiTree').addEventListener("click", async(e) => {
+
+        const target = e.target.closest("g");
+        
+        if(target){
+            const departCode = target.getAttribute("data-self"); // TEAM ID 가져오기 
+            console.log("선택한 부서 : ",departCode);
+            console.log("회사아이디 : ", companyId);
+            try{
+                let resp = await fetch(`${contextPath}/${companyId}/organiEmployee/${departCode}`,{
+					headers : {
+						"Content-Type" : "application/json"
+					}
+                })
+                if(resp.ok){
+                    const data = await resp.json();
+                    console.log("직원 :",data);
+
+                    employeeList(data);
+                }else{
+                    console.log("에러다 인마" , resp.status);
+                }
+            }catch(error){
+                console.log(error);
+            }
+        } // if(target) 끝
+    }) // organiTree 끝 
+
+
+    function employeeList(empListData){
+        let innerTh = document.querySelector(".innerTh");
+        innerTh.innerHTML = "";
+        innerTh.innerHTML = `
+            <tr>
+                <th>사원번호</th>
+                <th>사원명</th>
+                <th>직급</th>
+                <th>휴대폰번호</th>
+                <th>입사일자</th>           
+            </tr>
+        `;
+        let tbody = document.querySelector(".innerTbody");
+        tbody.innerHTML = "";
+        empListData.forEach(employee => {
+            
+            tbody.innerHTML += `
+                <tr class="employDetail" data-emp-id="${employee.empId}">
+                    <td>${employee.empId}</div></td>
+                    <td>${employee.empName}</td>
+                    <td>${employee.position.posiName}</td>
+                    <td>${employee.empPhone}</td>
+                    <td>${employee.empJoin}</td>
+                </tr>
+            `;
+        });
+    } // function employeeList 끝 
+	
+	// =============================================================================================
+    // 팀 선택 후 리스트에서 한명 클릭 했을 때 비동기 
+    document.querySelector(".innerTbody").addEventListener("click" , async(e) => {
+           
+            e.preventDefault();
+            const targetEmploy = e.target.closest(".employDetail");  // tr태그 값 가져오기. 
+
+            if(targetEmploy){
+				const empId = targetEmploy.getAttribute("data-emp-id")
+                console.log("직원한명클릭" , targetEmploy); // 클릭한 직원의 정보 출력 테스트 
+				console.log("아이디 " , empId);
+				try{
+                    let resp = await fetch(`${contextPath}/${companyId}/organiEmployee/detail/${empId}` , {
+                            headers : {
+                                "Content-Type" : "application/json"
+                            }
+                    }) // try end 
+                    if(resp.ok){
+                        const modalBody = document.getElementById("modalBody"); // 비동기로 받아온 값 inner 
+                        const data = await resp.json();
+                        console.log(data);
+						
+                        modalBody.innerHTML = `
+                            
+                         <table class="table table-striped table-bordered">
+                            <tbody>
+
+                                <tr>
+                                    <th>사진</th>
+                                    <td>
+                                        ${data.empImg 
+                                            ? `<img src="${data.empImg}" alt="${data.empName}" style="max-width: 100px; height: auto;">` 
+                                            : '사진 없음'}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th style="width: 30%;">사원번호</th>
+                                    <td>${data.empId}</td>
+                                </tr>
+                                <tr>
+                                    <th>사원명</th>
+                                    <td>${data.empName}</td>
+                                </tr>
+                                <tr>
+                                    <th>직급</th>
+                                    <td>${data.position?.posiName || '직급 정보 없음'}</td>
+                                </tr>
+                                <tr>
+                                    <th>전화번호</th>
+                                    <td>${data.empPhone || '전화번호 없음'}</td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td>${data.empMail || '이메일 없음'}</td>
+                                </tr>
+                                <tr>
+                                    <th>입사일</th>
+                                    <td>${data.empJoin || '입사일 정보 없음'}</td>
+                                </tr>
+                             
+                            </tbody>
+                        </table>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                            <a href="${contextPath}/${companyId}/mail/send" style="margin: 0 15px;">
+                                <i class='bx bx-mail-send' style="font-size: 2rem; color: #555;"></i>
+                            </a>
+                            <a href="#" style="margin: 0 15px;">
+                                <i class='bx bx-message-dots' style="font-size: 2rem; color: #555;"></i>
+                            </a>
+                        </div>
+                            `
+
+                            // Bootstrap 모달 표시
+                        const employeeModal = new bootstrap.Modal(document.getElementById('employeeModal'), {
+                            backdrop: true
+                        });
+                        employeeModal.show();
+
+                        
+                    }else{
+                        console.log("에러다 인마", resp.status);
+                    }
+
+
+                }catch(error){
+                        console.log(error);
+                } // catch end
+            }
+
+    })  // 직원 한명 클릭 끝 
+	
+    // =============================================================================================
+    // 직원 검색.  같은이름이 두명 이상일 시, 모달로 리스트 출력, 한명일 시, 바로 상세정보 출력 
+    // 한명도 없을 때는 검색 결과가 없습니다. (sweetalert)
+
+    document.querySelector(".btn-primary").addEventListener("click", async (e) => {
+        e.preventDefault();
+        const empName = document.querySelector("#empName").value;
+        console.log(empName);
+    
+        let resp = await fetch(`${contextPath}/${companyId}/organiEmployee/search/${empName}`, {
+            headers: { 
+                "Content-Type": "application/json" 
+            }
+        });
+    
+        if (resp.ok) {
+            const searchModalBody = document.querySelector("#searchModalBody");
+            const modal = new bootstrap.Modal(document.getElementById("searchEmployeeModal"));
+            const data = await resp.json();
+            console.log(data);
+    
+            if (data.length > 1) {
+                // 동명이인 리스트 테이블 생성
+                searchModalBody.innerHTML = `
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>사원번호</th>
+                                <th>사원명</th>
+                                <th>직급</th>
+                                <th>전화번호</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.map(emp => `
+                                <tr class="onePick" data-emp-id="${emp.empId}">
+                                    <td>${emp.empId}</td>
+                                    <td>${emp.empName}</td>
+                                    <td>${emp.position.posiName || '직급 정보 없음'}</td>
+                                    <td>${emp.empPhone || '전화번호 없음'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+                document.querySelector("#empName").value = "";
+                modal.show();
+                           
+                // 이벤트 위임: 리스트 클릭 시 상세 정보 표시
+                searchModalBody.addEventListener("click", (e) => {
+                    const target = e.target.closest(".onePick");
+                    if (target) {
+                        const empId = target.dataset.empId; // 클릭한 사원의 ID 추출
+                        const emp = data.find(emp => emp.empId === empId);
+                        // ? 는 null과 undefined를 먼저 확인해준다. 
+                        // 상세 정보 모달로 내용 업데이트
+                        searchModalBody.innerHTML = `
+                            <table class="table table-striped table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>사진</th>
+                                        <td>${emp.empImg ? `<img src="${emp.empImg}" alt="${emp.empName}" style="max-width: 100px;">` : '사진 없음'}</td>
+                                    </tr>
+                                    <tr><th>사원번호</th><td>${emp.empId}</td></tr>
+                                    <tr><th>사원명</th><td>${emp.empName}</td></tr>
+                                    <tr><th>직급</th><td>${emp.position?.posiName || '직급 정보 없음'}</td></tr> 
+                                    <tr><th>전화번호</th><td>${emp.empPhone || '전화번호 없음'}</td></tr>
+                                    <tr><th>이메일</th><td>${emp.empMail || '이메일 없음'}</td></tr>
+                                    <tr><th>입사일</th><td>${emp.empJoin || '입사일 정보 없음'}</td></tr>
+                                </tbody>
+                            </table>
+                            <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                            <a href="${contextPath}/${companyId}/mail/send" style="margin: 0 15px;">
+                                <i class='bx bx-mail-send' style="font-size: 2rem; color: #555;"></i>
+                            </a>
+                            <a href="#" style="margin: 0 15px;">
+                                <i class='bx bx-message-dots' style="font-size: 2rem; color: #555;"></i>
+                            </a>
+                            </div>
+                        `;
+                        document.querySelector("#empName").value = "";
+                        modal.show(); // 기존 모달을 재활용
+                    }
+                });
+            } else if (data.length == 1) {
+                const emp = data[0];
+                searchModalBody.innerHTML = `
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>사진</th>
+                                <td>${emp.empImg ? `<img src="${emp.empImg}" alt="${emp.empName}" style="max-width: 100px;">` : '사진 없음'}</td>
+                            </tr>
+                            <tr><th>사원번호</th><td>${emp.empId}</td></tr>
+                            <tr><th>사원명</th><td>${emp.empName}</td></tr>
+                            <tr><th>직급</th><td>${emp.position?.posiName || '직급 정보 없음'}</td></tr>
+                            <tr><th>전화번호</th><td>${emp.empPhone || '전화번호 없음'}</td></tr>
+                            <tr><th>이메일</th><td>${emp.empMail || '이메일 없음'}</td></tr>
+                            <tr><th>입사일</th><td>${emp.empJoin || '입사일 정보 없음'}</td></tr>
+                        </tbody>
+                    </table>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                            <a href="${contextPath}/${companyId}/mail/send" style="margin: 0 15px;">
+                                <i class='bx bx-mail-send' style="font-size: 2rem; color: #555;"></i>
+                            </a>
+                            <a href="#" style="margin: 0 15px;">
+                                <i class='bx bx-message-dots' style="font-size: 2rem; color: #555;"></i>
+                            </a>
+                        </div>
+                `;
+                document.querySelector("#empName").value = "";
+                modal.show();
+            } else {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "검색 결과가 없습니다.",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+        } else {
+            console.error(resp.status);
+        }
+    }); // 검색 끝
+    
+
+	
+
+
+}); // DOM end

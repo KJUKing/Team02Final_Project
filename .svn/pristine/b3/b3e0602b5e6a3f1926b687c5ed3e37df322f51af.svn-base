@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.organitree.dao.OrganiTreeMapper">
+
+<resultMap type="DepartmentVO" id="departmentVO" autoMapping="true">
+    <id property="depatId" column="DEPAT_ID" />
+    <result property="depatName" column="DEPAT_NAME" />
+    
+    <collection property="teamList" ofType="TeamVO" autoMapping="true">
+        <id property="teamId" column="TEAM_ID" />
+        <result property="teamName" column="TEAM_NAME" />
+        
+    </collection>
+
+</resultMap>
+        
+
+
+
+<select id="selectOrganiList" resultMap="departmentVO" >
+
+SELECT 
+  d.DEPAT_ID
+, d.DEPAT_NAME
+, d.CONTRACT_ID
+, t.TEAM_ID
+, t.TEAM_NAME
+FROM DEPARTMENT d INNER JOIN TEAM t ON (d.DEPAT_ID = t.DEPAT_ID)
+
+</select>
+	
+<resultMap type="EmployeeVO" id="employeeVO" autoMapping="true">
+	<collection property="teamMemberList" ofType="TeamMemberVO" autoMapping="true" />
+</resultMap>
+
+<select id="selectOrganiTeamMemberList" resultMap="employeeVO">
+
+SELECT 
+  e.EMP_ID
+, e.EMP_NAME
+, e.EMP_JOIN 
+, tm.TEAM_MEMBERID
+, tm.TEAM_ID
+FROM EMPLOYEE e LEFT OUTER JOIN TEAM_MEMBER tm 
+ON (e.EMP_ID = tm.EMP_ID)
+WHERE tm.TEAM_ID = #{teamId} AND e.EMP_STATUS='2'
+
+</select>
+
+
+	
+</mapper>

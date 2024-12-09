@@ -1,0 +1,27 @@
+package kr.or.ddit.roomTime.vo;
+
+import java.util.List;
+
+import kr.or.ddit.room.vo.RoomVO;
+import kr.or.ddit.roomReservation.vo.RoomReservationVO;
+import kr.or.ddit.timeReservation.vo.TimeReservationVO;
+import lombok.Data;
+import lombok.ToString;
+@Data
+public class RoomTimeVO {
+	
+	private String roomId;
+	private String timeCode;
+	private String roomtimeYn;
+	
+	
+	
+	@ToString.Exclude
+	private RoomVO room;//부모님을 데려오는 방법
+	@ToString.Exclude
+	private TimeReservationVO timeReser;
+	
+	
+	private List<RoomReservationVO> roomReserList;//자식을 가져오는 방법
+	
+}

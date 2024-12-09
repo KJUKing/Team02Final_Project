@@ -4,36 +4,194 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="179aac5f-25fd-4b74-8891-a1bc5c36dfd6" name="Changes" comment="" />
+    <list default="true" id="179aac5f-25fd-4b74-8891-a1bc5c36dfd6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/controller/NoticeFileController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/controller/NoticeModifyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/notice/noticeEdit.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/app/notice/noticeEdit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/approval/controller/ElectronicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/approval/controller/ElectronicController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/approval/service/ElectronicService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/approval/service/ElectronicService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/approval/service/ElectronicServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/approval/service/ElectronicServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/commons/controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/commons/controller/IndexController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/commons/paging/PaginationInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/commons/paging/PaginationInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/commons/paging/SImpleSearchCondition.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/commons/paging/renderer/renderPagination.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/controller/EmployeeJoinController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/controller/EmployeeLoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/controller/EmployeeLoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/controller/GoogleOAuthJoinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/controller/GoogleOAuthJoinController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/dao/EmployeeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/dao/EmployeeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/dao/GoogleOAuthMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/dao/GoogleOAuthMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/EmployeeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/EmployeeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/EmployeeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/GoogleOAuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/GoogleOAuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/GoogleOAuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/employee/service/GoogleOAuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/event/loginGmailEvent/GmailListEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/event/loginGmailEvent/GmailListEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/event/loginGmailEvent/LoginSuccessEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/event/loginGmailEvent/LoginSuccessEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/gmail/service/GoogleOAuthCheckService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/gmail/service/GoogleOAuthCheckService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/gmail/service/GoogleOAuthCheckServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/gmail/service/GoogleOAuthCheckServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/controller/NoticeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/dao/NoticeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/dao/NoticeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/service/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/service/NoticeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/service/NoticeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/service/NoticeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/controller/OrganiEmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/controller/OrganiEmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/controller/OrganiReadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/controller/OrganiReadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/dao/OrganiTreeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/dao/OrganiTreeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/service/OrganiTreeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/service/OrganiTreeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/service/OrganiTreeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/organitree/service/OrganiTreeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/question/controller/QuestionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/question/dao/QuestionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/question/dao/QuestionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/question/service/QuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/question/service/QuestionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/question/service/QuestionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/question/service/QuestionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/controller/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/dao/RoomMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/dao/RoomMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/service/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/service/RoomService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/service/RoomServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/room/service/RoomServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/roomReservation/dao/RoomReservationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/roomReservation/dao/RoomReservationMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/roomReservation/service/RoomReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/roomReservation/service/RoomReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/roomReservation/service/RoomReservationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/roomReservation/service/RoomReservationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/timeReservation/dao/TimeReservationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/timeReservation/dao/TimeReservationMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/timeReservation/service/TimeReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/timeReservation/service/TimeReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/timeReservation/service/TimeReservationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/timeReservation/service/TimeReservationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/AccountVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/CategoryVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/ContractVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/DepartmentVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/ElectronicVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/approval/vo/ElectronicVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/EmployeeVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/NoticeVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/or/ddit/notice/vo/NoticeVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/OAuthVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/QuestionVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/ReceivedMailVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/RoomReservationVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/RoomVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/SentMailVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/TeamMemberVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/TeamVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/or/ddit/vo/TimeReservationVO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/DirectoryInfo.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/DirectoryInfo.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/Configuration.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/EmployeeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/EmployeeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/GoogleOAuthMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/GoogleOAuthMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/NoticeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/NoticeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/OrganiMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/OrganiMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/RoomReservationMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/mybatis/mappers/RoomReservationMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/spring/context-datasource.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/spring/context-datasource.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/spring/context-mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/kr/or/ddit/spring/context-mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/header.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/postScript.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/postScript.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/preScript.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/preScript.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/sidebar.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/includee/sidebar.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/employee/employeeJoinForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/employee/employeeJoinForm.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/employee/employeeLoginForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/employee/employeeLoginForm.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/notice/noticeList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/notice/noticeList.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/organi/organiTree.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/organi/organiTree.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/question/questionList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/question/questionList.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/room/roomDetail.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/room/roomDetail.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/room/roomForm.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/room/roomForm.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/room/roomList.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/room/roomList.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/themeLayout.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/themeLayout.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/employee/employeeLoginForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/employee/employeeLoginForm.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/employee/employeeLoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/employee/employeeLoginForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/organi/organiTree.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/organi/organiTree.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/sneat-1.0.0/assets/vendor/css/core.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/sneat-1.0.0/assets/vendor/css/core.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/kr/or/ddit/room/service/RoomServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/kr/or/ddit/room/service/RoomServiceImplTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Jsp File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KJUKing&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KJUKing/Team02Final_Project.git&quot;,
+    &quot;accountId&quot;: &quot;48689065-3d30-4709-8712-199e67070e9a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2ppRwTxDP95Lz5OJAxZIhdoiqzN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/B_Util/7.Egov/eGovFrameDev-4.0.0-64bit/workspace/WebStudy06/pom.xml",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.NoticeServiceImplTest.readNoticeDetail.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;js.last.introduce.type&quot;: &quot;CONST&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/B_Util/7.Egov/eGovFrameDev-4.0.0-64bit/workspace/WebStudy06/pom.xml&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Dev\dev_finalProject\workspace\Team02Final\src\main\resources\kr\or\ddit\mybatis\mappers" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="kr.or.ddit.notice.service" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="NoticeServiceImplTest.readNoticeDetail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Team02Final" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kr.or.ddit.notice.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kr.or.ddit.notice.service" />
+      <option name="MAIN_CLASS_NAME" value="kr.or.ddit.notice.service.NoticeServiceImplTest" />
+      <option name="METHOD_NAME" value="readNoticeDetail" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.NoticeServiceImplTest.readNoticeDetail" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -56,6 +214,10 @@
       <option name="presentableId" value="Default" />
       <updated>1733461268552</updated>
       <workItem from="1733461269574" duration="14146000" />
+      <workItem from="1733487147337" duration="142000" />
+      <workItem from="1733529782854" duration="3360000" />
+      <workItem from="1733703283186" duration="33252000" />
+      <workItem from="1733747245847" duration="502000" />
     </task>
     <servers />
   </component>

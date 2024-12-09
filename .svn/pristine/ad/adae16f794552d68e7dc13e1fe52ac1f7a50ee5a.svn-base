@@ -1,0 +1,28 @@
+package kr.or.ddit.employee.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+@RequestMapping("/{companyId}/mypage")
+public class EmployeeMyPageController {
+	@GetMapping
+	public String getMyPagePage() {
+		return "employee/emplyeeMyPage";
+	}
+	
+	@GetMapping("edit")
+	public String getUpdateMyInfoForm() {
+		return "employee/employeeUpdateForm";
+	}
+	
+	@GetMapping("mylist")
+	public String getMyAttendanceVacation() {
+		return "employee/employeeAttendanceVacationPage";
+	}
+
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.organitree.dao.OrganiTreeMapper">
+
+<resultMap type="DepartmentVO" id="departmentVO" autoMapping="true">
+    <id property="departCode" column="DEPART_CODE" />
+    <result property="departName" column="DEPART_NAME" />
+    <result property="departParentcode" column="DEPART_PARENTCODE" />
+    
+    <collection property="employeeList" ofType="EmployeeVO" autoMapping="true">
+        
+        
+    </collection>
+
+</resultMap>
+        
+
+
+
+<select id="selectOrganiList" resultMap="departmentVO" >
+SELECT 
+  DEPART_CODE
+, DEPART_NAME
+, DEPART_PARENTCODE
+, DEPART_STATUS
+FROM DEPARTMENT
+WHERE DEPART_STATUS='Y' 
+		
+</select>
+
+<resultMap type="EmployeeVO" id="employeeVO" autoMapping="true">
+	<association property="position" javaType="PositionVO" autoMapping="true"></association>
+
+</resultMap>
+
+<select id="selectOneOrganiList" resultMap="employeeVO">
+	SELECT 
+  e.EMP_ID
+, e.EMP_NAME
+, e.EMP_PHONE
+, p.POSI_ID
+, p.POSI_NAME
+, e.EMP_JOIN 
+FROM EMPLOYEE e INNER JOIN POSITION p ON (e.POSI_ID = p.POSI_ID)
+WHERE e.DEPART_CODE = #{departCode}
+</select>
+	
+	
+</mapper>

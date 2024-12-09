@@ -1,0 +1,33 @@
+package kr.or.ddit.organitree.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.employee.vo.EmployeeVO;
+import kr.or.ddit.vo.DepartmentVO;
+
+@Mapper
+public interface OrganiTreeMapper {
+	
+	/**
+	 * 조직도의 부서, 팀 조회 
+	 */
+	public List<DepartmentVO> selectOrganiList(); 
+	
+	/**
+	 * 팀 선택시 팀의 소속 직원 조회 
+	 * @param teamId
+	 * @return
+	 */
+	public List<EmployeeVO> selectOrganiTeamMemberList(String teamId);
+	
+	/**
+	 * 팀 선택 후 소속 직원 중 한명 조회 
+	 * @param employee
+	 * @return
+	 */
+	public EmployeeVO selectOneEmployee(String empId);
+	
+	
+}

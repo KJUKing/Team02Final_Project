@@ -1,0 +1,13 @@
+package kr.or.ddit.roomReservation.service;
+
+import java.util.List;
+
+import kr.or.ddit.roomReservation.vo.RoomReservationVO;
+
+public interface RoomReservationService {
+	public boolean createRoomReser(RoomReservationVO roomReser);
+	public RoomReservationVO readRoomReser(String reserId);
+	public List<RoomReservationVO> readRoomReserList();
+	public boolean modifyRoomReser(RoomReservationVO roomReser);
+	public boolean removeRoomReser(String reserId);
+}

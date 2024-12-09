@@ -1,0 +1,54 @@
+package kr.or.ddit.question.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import kr.or.ddit.commons.paging.PaginationInfo;
+import kr.or.ddit.vo.QuestionVO;
+
+@Mapper
+public interface QuestionMapper {
+	/**
+	 * 문의 게시글 상세 조회
+	 * @param quNo
+	 * @return QuestionVO
+	 */
+	public QuestionVO selectQuestion(String quNo);
+	
+	/**
+	 * 문의 게시글 리스트 조회
+	 * @return List - QuestionVO
+	 */
+	public List<QuestionVO> selectQuestionList();
+	
+	/**
+	 * 페이징 처리를 위한 검색 결과 레코드 수 조회
+	 * @param paging
+	 * @return
+	 */
+	public int selectTotalRecord(@Param("paging")PaginationInfo<QuestionVO> paging);
+	
+	/**
+	 * 문의 게시글 등록
+	 * @param questionVO
+	 * @return int
+	 */
+	public int insertQuestion(QuestionVO questionVO);
+	
+	/**
+	 * 문의 게시글 수정
+	 * @param questionVO
+	 * @return int
+	 */
+	public int updateQuestion(QuestionVO questionVO);
+	
+	/**
+	 * 문의 게시글 삭제
+	 * @param quNo
+	 * @return int
+	 */
+	public int deleteQuestion(String quNo);
+
+}

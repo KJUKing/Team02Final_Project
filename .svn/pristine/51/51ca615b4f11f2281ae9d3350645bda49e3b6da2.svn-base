@@ -1,0 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Work2gether Join</title>
+<%@include file="employeePreScript.jsp"%>
+</head>
+
+<body data-contextPath="${pageContext.request.contextPath}">
+	<%@include file="employeeMessageSwal.jsp"%>
+	<div class="join-main-div">
+		<div class="logo">
+			<img id="logoImg" alt="logo" src="${pageContext.request.contextPath}/resources/sneat-1.0.0/assets/img/layouts/logo.png" />
+		</div>
+
+		<div>
+			<p>${myEmp.empMail}<p>
+			<c:if test="${empty sessionScope.myOAuth}">
+				<a class="google-oauth-a" href="${pageContext.request.contextPath}/google-oauth">
+					<img id="googleImg" alt="google-logo" src="${pageContext.request.contextPath}/resources/images/google-logo.png" />
+					<span id="googleInfo">구글 계정 인증하기</span>
+				</a>
+				<p id="google-oauth-introduction">사내 관리자를 통해 등록한 이메일 계정을 사용해주세요. 다른 계정 사용시 오류가 발생할 수 있습니다.</p>
+			</c:if>
+			<c:if test="${not empty sessionScope.myOAuth}">
+				<img id="googleImg" alt="google-logo" src="${pageContext.request.contextPath}/resources/images/google-logo.png" />
+				<span id="googleInfo"> 구글 계정 인증완료 </span>
+			</c:if>
+		</div>
+
+		<form method="post">
+			
+		</form>
+
+	</div>
+
+	<script type="text/javascript">
+						document.addEventListener("DOMContentLoaded", () => {
+							const googleForm = document.querySelector('#google-form');
+
+							googleForm.addEventListener("submit", async (e) => {
+
+							});
+						})
+					</script>
+</body>
+
+</html>

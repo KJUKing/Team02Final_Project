@@ -1,0 +1,50 @@
+package kr.or.ddit.question.service;
+
+import java.util.List;
+
+import kr.or.ddit.commons.enumpkg.ServiceResult;
+import kr.or.ddit.commons.paging.PaginationInfo;
+import kr.or.ddit.question.vo.QuestionVO;
+
+public interface QuestionService {
+	/**
+	 * 문의 게시글 상세 조회
+	 * @param quNo
+	 * @return QuestionVO
+	 */
+	public QuestionVO readQuestion(String quNo);
+	
+	/**
+	 * 문의 게시글 리스트 조회 - 페이징 처리 X
+	 * @return List - QuestionVO
+	 */
+	public List<QuestionVO> readQuestionList();
+	
+	/**
+	 * 문의 게시글 리스트 조회 - 페이징 처리 O
+	 * @param paginationInfo
+	 * @return
+	 */
+	public List<QuestionVO> readQuestionList(PaginationInfo<QuestionVO> paginationInfo);
+	
+	/**
+	 * 문의 게시글 등록
+	 * @param questionVO
+	 * @return OK, FAIL
+	 */
+	public ServiceResult createQuestion(QuestionVO questionVO);
+	
+	/**
+	 * 문의 게시글 수정
+	 * @param questionVO
+	 * @return OK, FAIL
+	 */
+	public ServiceResult modifyQuestion(QuestionVO questionVO);
+	
+	/**
+	 * 문의 게시글 삭제
+	 * @param quNo
+	 * @return OK, FAIL
+	 */
+	public ServiceResult removeQuestion(String quNo);
+}

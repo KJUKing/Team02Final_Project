@@ -1,0 +1,45 @@
+package kr.or.ddit.room.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+
+import kr.or.ddit.annotation.RootContextWebConfig;
+
+@RootContextWebConfig
+class RoomServiceImplTest {
+
+	@Inject
+	private RoomService service;
+	
+	@Test
+	void testCreateRoom() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testReadRoom() {
+		assertNotNull(service.readRoom("R201"));
+		
+	
+	}
+
+	@Test
+	void testReadRoomList() {
+		assertDoesNotThrow(()->service.readRoomList());
+	}
+
+	@Test
+	void testModifyRoom() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testRemoveRoom() {
+		fail("Not yet implemented");
+	}
+
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.roomTime.dao.RoomTimeMapper">
+
+
+<resultMap type="kr.or.ddit.roomTime.vo.RoomTimeVO" id="roomTimeMap">
+	<association property="timeReser" javaType="TimeReservationVO"></association>
+	<association property="room" javaType="RoomVO"></association>
+</resultMap>
+
+<select id="selectRoomTime" resultMap="roomTimeMap">
+
+WITH V_TIME AS (
+	SELECT RT.ROOM_ID, RT.TIME_CODE, RT.ROOMTIME_YN, 
+	R.ROOM_HOSU,
+	R.ROOM_NAME,
+	R.ROOM_NUM,
+	R.ROOM_IMG,
+	R.ROOM_DETAIL,
+	R.ROOM_YN
+	FROM ROOM_TIME RT INNER JOIN ROOM R ON RT.ROOM_ID = R.ROOM_ID
+)
+SELECT VT.*, T.*
+FROM V_TIME VT INNER JOIN TIME_RESERVATION T ON VT.TIME_CODE = T.TIME_CODE
+WHERE VT.ROOM_ID = #{roomId}
+
+</select>
+
+
+</mapper>

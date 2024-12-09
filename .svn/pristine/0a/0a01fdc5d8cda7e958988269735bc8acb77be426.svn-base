@@ -1,0 +1,63 @@
+package kr.or.ddit.commons.paging.renderer;
+
+import kr.or.ddit.commons.paging.PaginationInfo;
+
+public class renderPagination implements PaginationRenderer {
+	
+	@Override
+	public String renderPagination(PaginationInfo paging, String fnName) {
+
+	      int startPage = paging.getStartPage();
+	      int endPage = paging.getEndPage();
+	      int totalPage = paging.getTotalPage();
+	      int blockSize = paging.getBlockSize();
+	      int currentPage = paging.getCurrentPage();
+	      
+	      endPage = endPage  > totalPage ? totalPage : endPage;
+	      StringBuffer html = new StringBuffer();
+	      html.append("<ul class='pagination'>");
+	      String pattern = 
+	      		"<li class='page-item'>"
+	      		+ "<a class='page-link' href='?page=%d'>%s</a>"
+	      		+ "</li>";
+	      String activePattern = "<li class='page-item active'>"
+		      		+ "<a class='page-link' href='?page=%d'>%s</a>"
+		      		+ "</li>";
+	      String prevPattern = "<li class='page-item prev'>"
+	      		+ "<a class='page-link' href='?page=%d'>"
+	      		+ "<i class='tf-icon bx bx-chevron-left'></i>"
+	      		+ "</a>"
+	      		+ "</li>";
+	      String nextPattern = "<li class='page-item next'>"
+		      		+ "<a class='page-link' href='?page=%d'>"
+		      		+ "<i class='tf-icon bx bx-chevron-right'></i>"
+		      		+ "</a>"
+		      		+ "</li>";
+	      if(startPage > blockSize ) {
+	         html.append(
+	            String.format(prevPattern, (startPage-blockSize))
+	         );
+	      }
+	      
+	      // 현재페이지는 좀 헷갈려서 나중에 확인 가능할 때 수정해 놓겠습니다 ;;ㅠ
+	      for(int page = startPage; page <= endPage; page++) {
+	         if(page == currentPage) {
+	            html.append( String.format(activePattern, page));
+	         }else {            
+	            html.append(
+	                  String.format(pattern, page, page)
+	            );
+	         }
+	      }
+	      if(endPage < totalPage) {
+	         html.append(
+	               String.format(nextPattern, endPage+1)
+	            );
+	      }
+	      html.append("</ul>");
+	      
+	      
+	      return html.toString();
+	}
+
+}

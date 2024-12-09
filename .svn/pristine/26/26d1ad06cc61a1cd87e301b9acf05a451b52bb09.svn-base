@@ -1,0 +1,16 @@
+package kr.or.ddit.timeReservation.vo;
+
+import java.util.List;
+
+import lombok.Data;
+import lombok.ToString;
+@Data
+public class TimeReservationVO {
+	private String timeCode;
+	private String timeRange;
+	private String roomId;
+	
+	private List<RoomReservationVO> roomReserList;// Has Many (1:n)
+	
+	private List<RoomVO> roomList;
+}

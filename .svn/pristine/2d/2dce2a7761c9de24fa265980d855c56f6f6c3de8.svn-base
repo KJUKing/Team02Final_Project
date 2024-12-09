@@ -1,0 +1,135 @@
+package kr.or.ddit.employee.controller;
+
+import java.util.Random;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.commons.validate.PhoneAuthGroup;
+import kr.or.ddit.employee.service.EmployeeService;
+import kr.or.ddit.employee.vo.EmployeeVO;
+import lombok.extern.slf4j.Slf4j;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
+
+@Slf4j
+@Controller
+@RequestMapping("/{companyId}/empauth")
+public class EmployeeAuthCheckController {
+
+	@Inject
+	private EmployeeService employeeService;
+
+	@GetMapping
+	public String authMessage() {
+		return "/employee/employeePhoneAuthForm";
+	}
+
+	// 인증번호 전송 버튼을 클릭하면 실행됨
+	@PostMapping
+	public ResponseEntity sendSMS(
+			// 클라이언트로부터 받은 정보
+			@Validated(PhoneAuthGroup.class) EmployeeVO emp,
+			BindingResult errors,
+			// 인증번호를 세션에 저장하기 위해
+			HttpSession session
+	){
+		
+		if(!errors.hasErrors()) {
+			// 검증 통과
+			
+			// 데이터베이스에 해당 정보로 등록된 정보가 있는지 확인
+			
+			if(true) {
+//				if(employeeService.readEmployee(emp)==ServiceResult.OK) {
+				// 정보가 있으면..
+				// 랜덤한 인증번호 생성
+				String verificationCode = generateVerificationCode();
+				String smsText = String.format("[Work2gether] 인증번호 [%s]를 입력해주세요. 사칭/전화사기에 주의하세요.", verificationCode);
+				session.setAttribute("verificationCode", verificationCode);
+				// log.info("==> ☎️☎️☎️☎️☎️☎️☎️☎️전송될 메세지 : {}", smsText);
+				
+//				sendOauthSMS(emp.getEmpPhone(),smsText);
+				
+				
+				// 성공적으로 응답 반환
+				return ResponseEntity.ok("문자 전송 완료");
+			} else {
+				// 정보가 없으면..
+				return ResponseEntity.badRequest().body("일치하는 정보가 없습니다.");
+			}
+			
+		} else {
+			// 검증 실패
+			return ResponseEntity.badRequest().body("빈 칸 없이 전송해주세요.");
+		}
+		
+	}
+
+	@PostMapping("/checkAuthCode")
+	public String authCodeCheck(
+			@PathVariable("companyId") String companyId,
+			// 클라이언트가 입력한 인증번호
+			@RequestParam(value = "authCode", required = true) String authCode,
+			// 세션에 저장된 인증번호를 꺼내오기 위해..
+			HttpSession session,
+			RedirectAttributes redirectAttributes
+	) {
+		log.info(companyId);
+		log.info(authCode);
+		// 세션에 저장된 인증번호 꺼내오기
+		String verificationCode = (String) session.getAttribute("verificationCode");
+
+		// 세션에 저장된 인증번호와 입력한 인증번호 비교
+		if (!StringUtils.isBlank(verificationCode) && verificationCode.equals(authCode)) {
+			// 데이터베이스의 해당 계정의 상태를 U로 업데이트
+			redirectAttributes.addFlashAttribute("message", "정지가 해제되었습니다. 다시 로그인을 실행해주세요!");
+			return "redirect:/a001/login";
+		} else {
+			return "redirect:/a001/empauth";
+		}
+	}
+	
+	// 문자 전송 메소드
+	private SingleMessageSentResponse sendOauthSMS(String phoneNumber, String smsText) {
+		// 메세지 전송 정보를 담은 message 객체
+		// API_KEY, API_SECRET_KEY ==> CoolSMS 계정 정보에서 확인
+		String API_KEY = "NCSZ8W4NYTMBCI5T";
+		String API_SECRET_KEY = "VACPRWB2JBOHYUVWT1YYKH9WS2AHPMR9";
+		DefaultMessageService messageService = NurigoApp.INSTANCE.initialize(API_KEY, API_SECRET_KEY,
+				"https://api.coolsms.co.kr");
+		
+		Message message = new Message();
+		message.setFrom("01056959501");
+		message.setTo(phoneNumber);
+		message.setText(smsText);
+		SingleMessageSentResponse response 
+			= messageService.sendOne(new SingleMessageSendingRequest(message));
+		return response;
+	}
+	
+	
+	// 랜덤 인증 코드를 만드는 메소드
+	public String generateVerificationCode() {
+		Random rand = new Random();
+		int code = 100000 + rand.nextInt(900000);
+
+		return String.valueOf(code);
+	}
+
+}

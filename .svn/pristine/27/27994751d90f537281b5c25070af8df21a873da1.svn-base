@@ -1,0 +1,109 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.getElementById('organiTree').addEventListener("click", async(e) => {
+
+        const target = e.target.closest(".lastTeam");
+        if(target){
+            const teamId = target.getAttribute("data-team-id"); // TEAM ID 가져오기 
+            console.log("클릭한 팀 아디 :" , teamId);
+            console.log("회사아이디 : ", companyId);
+            try{
+                let resp = await fetch(`../../work2gether/companyId/organiEmployee/employList?teamId=${teamId}`,{
+					headers : {
+						"Content-Type" : "application/json"
+					}
+                })
+                if(resp.ok){
+                    const data = await resp.json();
+                    console.log("직원 :",data);
+
+                    employeeList(data);
+                }else{
+                    console.log("에러다 인마" , resp.status);
+                }
+            }catch(error){
+                console.log(error);
+            }
+        } // if(target) 끝
+    }) // organiTree 끝 
+
+
+    function employeeList(empListData){
+        let innerTh = document.querySelector(".innerTh");
+        innerTh.innerHTML = "";
+        innerTh.innerHTML = `
+            <tr>
+                <th>사원번호</th>
+                <th>사원명</th>
+                <th>휴대폰번호</th>
+                <th>입사일자</th>           
+            </tr>
+        `;
+        let tbody = document.querySelector(".innerTbody");
+        empListData.forEach(employee => {
+            tbody.innerHTML += `
+                <tr class="employDetail" data-emp-id="${employee.empId}">
+                    <td>${employee.empId}</div></td>
+                    <td>${employee.empName}</td>
+                    <td>${employee.empPhone}</td>
+                    <td>${employee.empJoin}</td>
+                </tr>
+            `;
+        });
+    } // function employeeList 끝 
+	
+	// =============================================================================================
+    // 팀 선택 후 리스트에서 한명 클릭 했을 때 비동기 
+    document.querySelector(".innerTbody").addEventListener("click" , async(e) => {
+           
+            e.preventDefault();
+            const targetEmploy = e.target.closest(".employDetail");  // tr태그 값 가져오기. 
+
+            if(targetEmploy){
+				const empId = targetEmploy.getAttribute("data-emp-id")
+                console.log("직원한명클릭" , targetEmploy); // 클릭한 직원의 정보 출력 테스트 
+				console.log("아이디 " , empId);
+				try{
+                    let resp = await fetch(`../../work2gether/companyId/organiEmployee/employOne?empId=${empId}` , {
+                            headers : {
+                                "Content-Type" : "application/json"
+                            }
+                    }) // try end 
+                    if(resp.ok){
+                        const modalBody = document.getElementById("modalBody"); // 비동기로 받아온 값 inner 
+                        const data = await resp.json();
+                        console.log(data);
+						
+                        modalBody.innerHTML = `
+                            <h3> 직원 상세 정보</h3>
+                            <img src="${data.empImg}" alt="${data.empName}">
+                            <p><strong>사원번호: </strong>${data.empId}</p>
+                            <p><strong>사원명: </strong>${data.empName}</p>
+                            <p><strong>직급: </strong>${data.posiId}</p>
+                            <p><strong>전화번호: </strong>${data.empPhone}</p>
+                            <p><strong>이메일: </strong>${data.accountMail}</p>
+                            <p><strong>입사연도: </strong>${data.empJoin}</p>
+                          
+                            `
+
+                            // Bootstrap 모달 표시
+                        const employeeModal = new bootstrap.Modal(document.getElementById('employeeModal'), {
+                            backdrop: true
+                        });
+                        employeeModal.show();
+                    }else{
+                        console.log("에러다 인마", resp.status);
+                    }
+
+
+                }catch(error){
+                        console.log(error);
+                } // catch end
+            } // if(targetEmploy) 끝 
+    })  // 직원 한명 클릭 끝 
+				
+	
+
+
+}); // DOM end

@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Work2gether Login</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/employee/employeeLoginForm.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/sweetalert2.min.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/lib/bootstrap-5.0.2-dist/css/bootstrap.min.css" />
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<script src="${pageContext.request.contextPath}/resources/lib/sweetalert2.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/lib/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+</head>
+
+<body data-contextPath="${pageContext.request.contextPath}">
+	<c:if test="${not empty message}">
+		<script>
+			Swal.mixin({
+			    toast: true,
+			    position: 'top',
+			    showConfirmButton: false,
+			    timer: 3000,
+			    timerProgressBar: true,
+			    
+			    // 알림 열렸을 때 실행되는 콜백함수
+			    // toast 인자로 알림 DOM 요소 접근
+			    didOpen: (toast) => {
+			    	// 토스트에 마우스를 올렸을 때 타이머 멈추는 이벤트(알림이 안 닫힘)
+			        toast.addEventListener('mouseenter', Swal.stopTimer)
+			        // 토스트에 마우스 치우면 타이머 진행 이벤트
+			        toast.addEventListener('mouseleave', Swal.resumeTimer)
+			    }
+			}).fire({
+			    icon: 'error',
+			    title: `${message}`
+			})
+		</script>
+	</c:if>

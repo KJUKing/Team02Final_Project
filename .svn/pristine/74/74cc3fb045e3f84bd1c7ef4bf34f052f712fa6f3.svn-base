@@ -1,0 +1,48 @@
+package kr.or.ddit.question.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.commons.enumpkg.ServiceResult;
+import kr.or.ddit.question.dao.QuestionMapper;
+import kr.or.ddit.question.vo.QuestionVO;
+
+@Service
+public class QuestionServiceImpl implements QuestionService {
+	
+	@Autowired
+	private QuestionMapper dao;
+	
+	@Override
+	public QuestionVO readQuestion(String quNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<QuestionVO> readQuestionList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult createQuestion(QuestionVO questionVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult modifyQuestion(QuestionVO questionVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult removeQuestion(String quNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

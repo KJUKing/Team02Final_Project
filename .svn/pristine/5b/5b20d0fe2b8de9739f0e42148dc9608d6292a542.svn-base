@@ -1,0 +1,77 @@
+package kr.or.ddit.employee.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.commons.enumpkg.ServiceResult;
+import kr.or.ddit.commons.exception.PKNotFoundException;
+import kr.or.ddit.employee.dao.EmployeeMapper;
+import kr.or.ddit.employee.vo.EmployeeVO;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+	@Inject
+	private EmployeeMapper employeeMapper;
+
+	@Override
+	public EmployeeVO readEmployee(String accountMail) {
+		EmployeeVO emp = employeeMapper.selectEmployee(accountMail);
+		
+		if(emp!=null) {
+			return emp;
+		} else {
+			throw new PKNotFoundException();
+		}
+	}
+
+	@Override
+	public List<EmployeeVO> readEmployeeList() {
+		return employeeMapper.selectEmployeeList();
+	}
+
+	@Override
+	public ServiceResult createEmployee(EmployeeVO emp) {
+		int rowcnt = employeeMapper.insertEmployee(emp);
+		if(rowcnt>0) return ServiceResult.OK;
+		else return ServiceResult.FAIL;
+	}
+
+	@Override
+	public ServiceResult modifyEmployee(EmployeeVO emp) {
+		int rowcnt = employeeMapper.updateEmployee(emp);
+		if(rowcnt>0) return ServiceResult.OK;
+		else return ServiceResult.FAIL;
+	}
+	
+	@Override
+	public ServiceResult modifyStatusEmployee(String accountMail) {
+		int rowcnt = employeeMapper.updateEmployeeStatus(accountMail);
+		ServiceResult result = null;
+		if(rowcnt!=1) {
+			// update 실패했으면
+			result = ServiceResult.FAIL;
+		} else {
+			// update 성공했으면
+			result = ServiceResult.OK;
+		}
+		return result;
+	}
+	
+	@Override
+	public ServiceResult deleteEmployee(String accountMail) {
+		int rowcnt = employeeMapper.deleteEmployee(accountMail);
+		if(rowcnt>0) return ServiceResult.OK;
+		else return ServiceResult.FAIL;
+	}
+	
+	
+
+	
+	
+	
+
+}

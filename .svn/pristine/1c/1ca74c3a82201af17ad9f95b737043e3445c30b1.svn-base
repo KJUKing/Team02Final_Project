@@ -1,0 +1,13 @@
+package kr.or.ddit.room.service;
+
+import java.util.List;
+
+import kr.or.ddit.vo.RoomVO;
+
+public interface RoomService {
+	public boolean createRoom(RoomVO room);
+	public RoomVO readRoom(String roomId);
+	public List<RoomVO> readRoomList();
+	public boolean modifyRoom(RoomVO read);
+	public boolean removeRoom(String roomId);
+}

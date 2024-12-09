@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.notice.dao.NoticeMapper">
+
+	<!-- 공지사항 컬럼 정의 -->
+	<sql id="noticeColumns">
+		NOTICE_NO, NOTICE_NAME, NOTICE_CONTENT, NOTICE_DATE, NOTICE_IMG,
+        EMP_ID, NOTICE_IMPORTANT
+	</sql>
+
+	<!-- 검색 조건 -->
+	<sql id="searchFrag">
+		<where>
+			<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+				<choose>
+					<when test="simpleCondition.searchType eq 'title'">
+						INSTR(NOTICE_NAME, #{simpleCondition.searchWord}) > 0
+					</when>
+					<otherwise>
+						INSTR(NOTICE_NAME, #{simpleCondition.searchWord}) > 0
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 공지사항 총 레코드 수 -->
+	<select id="selectTotalRecord" resultType="int">
+		SELECT COUNT(NOTICE_NO)
+		FROM NOTICE
+		<include refid="searchFrag"/>
+	</select>
+
+	<!-- 공지사항 목록 조회 -->
+	<select id="selectNoticeList" resultType="NoticeVO">
+		SELECT B.*
+		FROM (
+		SELECT ROWNUM RNUM, A.*
+		FROM (
+		SELECT
+		<include refid="noticeColumns"/>
+		FROM NOTICE
+		<include refid="searchFrag"/>
+		ORDER BY NOTICE_NO DESC
+		) A
+		) B
+		<![CDATA[
+        WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+        ]]>
+	</select>
+
+	<!-- 공지사항 상세 조회 -->
+	<select id="selectNoticeDetail" resultType="NoticeVO">
+		SELECT
+		<include refid="noticeColumns" />
+		FROM NOTICE
+		WHERE NOTICE_NO = #{NoticeNo}
+	</select>
+
+	<!-- 공지사항 글쓰기 -->
+	<insert id="insertNotice" parameterType="NoticeVO">
+		<!-- 시퀀스 사용 가정: NOTICE_SEQ.nextval -->
+		<selectKey keyProperty="noticeNo" resultType="string" order="BEFORE">
+			SELECT TO_CHAR(NOTICE_SEQ.NEXTVAL) AS NEXT_NO FROM DUAL
+		</selectKey>
+		INSERT INTO NOTICE (
+		<include refid="noticeColumns" />
+		) VALUES (
+		#{noticeNo, jdbcType=VARCHAR},
+		#{noticeName, jdbcType=VARCHAR},
+		#{noticeContent, jdbcType=VARCHAR},
+		<if test="noticeDate != null">
+			#{noticeDate, jdbcType=DATE},
+		</if>
+		<if test="noticeDate == null">
+			SYSDATE,
+		</if>
+		#{noticeImg, jdbcType=BLOB},
+		#{empId, jdbcType=VARCHAR},
+		#{noticeImportant, jdbcType=VARCHAR},
+		#{atchFileId, jdbcType=NUMERIC}
+		)
+	</insert>
+
+</mapper>

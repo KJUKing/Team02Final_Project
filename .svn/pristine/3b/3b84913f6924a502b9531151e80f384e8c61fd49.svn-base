@@ -1,0 +1,55 @@
+package kr.or.ddit.employee.service;
+
+import java.util.List;
+
+import kr.or.ddit.commons.enumpkg.ServiceResult;
+import kr.or.ddit.employee.vo.EmployeeVO;
+
+public interface EmployeeService {
+	/**
+	 * 직원 한 명의 정보 조회
+	 * @param accountMail
+	 * @return 없을 경우 PKNotFoundException
+	 */
+	public EmployeeVO readEmployee(String empMail);
+	
+	/**
+	 * 전체 직원의 정보 조회
+	 * @return
+	 */
+	public List<EmployeeVO> readEmployeeList();
+	
+	/**
+	 * 문자 인증시 사용할 직원 한 명의 정보 조회
+	 * @param emp : 이름, mail, 핸드폰 번호가 있음
+	 * @return 없을 경우 PKNotFoundException
+	 */
+	public EmployeeVO readEmployeeForAuth(EmployeeVO emp);
+	
+	/**
+	 * 새로운 직원 추가(account 먼저 추가 후에 진행해야함)
+	 * @param emp
+	 * @return
+	 */
+	public ServiceResult createEmployee(EmployeeVO emp);
+	
+	/**
+	 * 직원 한 명의 정보 업데이트
+	 * @param emp
+	 * @return OK / FAIL
+	 */
+	public ServiceResult modifyEmployee(EmployeeVO emp);
+	
+	/**
+	 * 로그인 3회 이상 실패시 직원의 status 변경(N 혹은 Y)
+	 * @param accountMail
+	 * @return
+	 */
+	public ServiceResult modifyStatusEmployee(String empMail, String empStatus);
+	
+	/**
+	 * @param accountMail
+	 * @return
+	 */
+	public ServiceResult deleteEmployee(String empMail);
+}

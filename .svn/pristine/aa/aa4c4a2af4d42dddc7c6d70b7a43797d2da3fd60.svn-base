@@ -1,0 +1,58 @@
+package kr.or.ddit.question.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.commons.enumpkg.ServiceResult;
+import kr.or.ddit.commons.exception.BoardException;
+import kr.or.ddit.commons.paging.PaginationInfo;
+import kr.or.ddit.question.dao.QuestionMapper;
+import kr.or.ddit.question.vo.QuestionVO;
+
+@Service
+public class QuestionServiceImpl implements QuestionService {
+	
+	@Autowired
+	private QuestionMapper mapper;
+	
+	@Override
+	public QuestionVO readQuestion(String quNo) {
+		QuestionVO question = mapper.selectQuestion(quNo);
+		if(question == null)
+			throw new BoardException(String.format("%d 번 글이 없음", quNo));
+		return question;
+	}
+	
+	@Override
+	public List<QuestionVO> readQuestionList(){
+		return mapper.selectQuestionListNonPaging();
+	}
+	
+	@Override
+	public List<QuestionVO> readQuestionList(PaginationInfo<QuestionVO> paging) {
+		paging .setTotalRecord(mapper.selectTotalRecord(paging));
+		List<QuestionVO> questionList = mapper.selectQuestionList(paging);
+		return questionList;
+	}
+
+	@Override
+	public ServiceResult createQuestion(QuestionVO questionVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult modifyQuestion(QuestionVO questionVO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResult removeQuestion(String quNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

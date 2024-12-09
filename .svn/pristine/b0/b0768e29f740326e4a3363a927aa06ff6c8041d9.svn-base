@@ -1,0 +1,115 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+
+
+<%@include file="employeePreScript.jsp" %>
+
+	<div class="main-div">
+		
+				<div class="modal-header">
+					<h4 class="modal-title" id="smsModalLabel">문자 인증</h4>
+				</div>
+				<div class="modal-body">
+					<form id="sms-modal-form">
+							<input type="text" name="empName" placeholder="이름을 입력해주세요." class="form-control" />
+							<input type="text" name="accountMail" placeholder="이메일을 입력해주세요." class="form-control" />
+							<input type="text" name="empPhone" placeholder="핸드폰 번호를 입력해주세요." class="form-control" />
+							
+							<button type="submit" class="btn btn-primary">문자전송</button>
+							<p id="guide-phone-auth">  </p>
+					</form>
+					
+					
+					<form id="auth-check-form" method="post" action="/work2gether/a001/empauth/checkAuthCode">
+							<input type="text" name="authCode" id="auth-input" placeholder="인증번호 요청을 해주세요." class="form-control" disabled="disabled"/>
+							<button type="submit" class="btn btn-primary">인증번호 확인</button>
+							<p id="phone-auth-result">  </p>
+					</form>
+					
+				</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">닫기</button>
+						<button type="submit" class="btn btn-primary">확인</button>
+					</div>
+		
+	</div>
+
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", () => {
+			const pathName = window.location.pathname; // /work2gether/a001/login 이런식으로 들어옴
+			const regex = /\/work2gether\/([^/]+)/i;	// 정규식 /work2gether/{여기의 값을 꺼내옴}/이후 뎁스
+			const match = pathName.match(regex);
+			let companyId;
+			if (match && match[1]) {
+				companyId = match[1];
+			} else {
+				console.log("No match found");
+			}
+			
+			
+			// 문자인증 문자 요청 form 태그
+			const smsModalForm = document.querySelector('#sms-modal-form');
+			// 문자인증 확인 form 태그
+			const authCheckForm = document.querySelector('#auth-check-form');
+			// 문자인증 form 내부의 모든 input 태그 선택
+			const inputFields = smsModalForm.querySelectorAll("input");
+			// 문자인증 요청 결과 출력 영역
+			const guidePhoneAuth = document.querySelector('#guide-phone-auth');
+			// 문자인증 최종 결과 출력 영역
+			const phoneAuthResult = document.querySelector('#phone-auth-result');
+			// 인증번호 입력칸
+			const authInput = document.querySelector('#auth-input');
+			
+			// 문자인증 문자 요청 form 태그의 submit 핸들러
+			smsModalForm.addEventListener("submit", async (e) => {
+				e.preventDefault();
+				let data = new URLSearchParams(new FormData(smsModalForm));
+				let url = "/work2gether/"+companyId+"/empauth";
+				console.log(url);
+	
+				// 비동기 요청으로 form 태그에 작성된 정보들을 controller로 전송
+				let resp = await fetch(url, {
+					method: 'post',
+					body: data
+				});
+	
+				let result;
+				if (resp.ok) {
+					// 성공
+					let message = await resp.text();
+					result = message.replace(/"/g, '');
+	
+					// 인증번호 입력란 placeholder 바꾸고 disabled 풀기
+					authInput.setAttribute('placeholder', '인증번호를 입력해주세요.');
+					authInput.disabled = false;
+					guidePhoneAuth.style.color = 'blue';
+					// sms-modal-form 안의 input 태그들 전체 readonly로 바꾸기
+					inputFields.forEach(input => {
+						input.readOnly = true;
+					});
+	
+				} else {
+					// 실패
+					let error = await resp.text();
+					guidePhoneAuth.style.color = 'red';
+					result = error.replace(/"/g, '');
+				}
+				guidePhoneAuth.innerHTML = result;
+	
+			})
+	
+			// 인증번호 입력 후 확인
+			authCheckForm.addEventListener("submit", async (e) => {
+				// authCode에 작성한 데이터를 controller로 보내기(POST로!!!)
+				let url = ;
+				authCheckForm.url = url;
+				authCheckForm.submit();				
+			})
+			
+		})
+	</script>
+</body>
+</html>

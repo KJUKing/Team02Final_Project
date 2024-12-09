@@ -1,0 +1,57 @@
+package kr.or.ddit.employee.controller;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.commons.exception.PKNotFoundException;
+import kr.or.ddit.employee.service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Controller
+public class EmployeeJoinController {
+	
+	@Inject
+	private EmployeeService service;
+	/*
+	1. front에서 고객으로 부터 입력받은 empId를 받아옴
+	2. data base에 해당 empId로 저장되어있는 정보 조회
+	  SELECT *
+	  FROM EMPLOYEE
+	  WHERE EMP_ID=#{empId} AND EMP_STATUS=1
+	3. 정보조회의 결과가 없으면 경고 메세지 return(redirect)
+	4. 정보조회의 결과가 있으면 회원가입 페이지로 이동
+	*/
+	
+	@GetMapping("/{companyId}/mailCheck")
+	public String mailCheck(
+			@PathVariable("companyId") String companyId,
+			@RequestParam("accountMail") String accountMail,
+			RedirectAttributes redirectAttributes
+	) {
+		// 사용자로부터 입력받은 이메일을 Account에서 조회
+		// Account의 최초로그인 여부가 Y인 경우, Employee에서 데이터 가져옴
+		// 
+		try {
+//			EmployeeVO result=service.joinCheck(accountMail);
+//			redirectAttributes.addFlashAttribute("myEmp", result);
+			return String.format("redirect:/%s/join", companyId);
+		} catch(PKNotFoundException e) {
+			redirectAttributes.addFlashAttribute("message", "일치하는 정보가 없습니다.");
+			return String.format("redirect:/%s/login", companyId);
+		}
+		
+	}
+		
+
+	
+	@GetMapping("/{companyId}/join")
+	public String getJoinForm() {
+		return "/employee/employeeJoinForm";
+	}
+}

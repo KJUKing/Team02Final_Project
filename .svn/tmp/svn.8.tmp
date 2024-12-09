@@ -1,0 +1,20 @@
+package kr.or.ddit.notice.dao;
+
+import kr.or.ddit.vo.NoticeVO;
+import org.apache.ibatis.annotations.Mapper;
+import org.aspectj.weaver.ast.Not;
+
+import java.util.List;
+
+@Mapper
+public interface NoticeMapper{
+    public int insertNotice(NoticeVO notice);
+
+    public List<NoticeVO> selectNoticeList();
+
+    public NoticeVO selectNoticeById(int NoticeId);
+
+    public int updateNotice(NoticeVO notice);
+
+    public int deleteNotice(int NoticeId);
+}

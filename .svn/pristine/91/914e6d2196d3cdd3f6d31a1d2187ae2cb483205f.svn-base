@@ -1,0 +1,15 @@
+package kr.or.ddit.organitree.service;
+
+import java.util.List;
+
+import kr.or.ddit.employee.vo.EmployeeVO;
+import kr.or.ddit.organitree.vo.DepartmentVO;
+
+public interface OrganiTreeService {
+		
+	public List<DepartmentVO> readOrganiList();
+
+	public List<EmployeeVO> readOrganiMemberList(String teamId);
+	
+	public EmployeeVO readOrganiEmployOne(String empId);
+}

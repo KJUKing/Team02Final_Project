@@ -1,0 +1,66 @@
+package kr.or.ddit.employee.service;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.time.LocalDate;
+
+import javax.inject.Inject;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import kr.or.ddit.annotation.RootContextWebConfig;
+import kr.or.ddit.employee.vo.EmployeeVO;
+@RootContextWebConfig
+class EmployeeServiceImplTest {
+	@Inject
+	private EmployeeService service;
+
+	@Disabled
+	@Test // 성공
+	void testReadEmployee() {
+		service.readEmployee("kimny950111@gmail.com");
+	}
+	
+	@Disabled
+	@Test // 성공
+	void testReadEmployeeList() {
+		service.readEmployeeList();
+	}
+
+	
+	@Test
+	void testCreateEmployee() {
+		EmployeeVO emp = new EmployeeVO();
+		emp.setEmpId("dawn");
+		emp.setEmpName("새벽");
+		emp.setAccountMail("mail");
+		emp.setEmpJoin(LocalDate.now());
+		emp.setEmpVacation(10L);
+		emp.setPosiId("t");
+		emp.setSempId("s");
+		service.createEmployee(emp);
+	}
+
+	@Disabled
+	@Test // 성공
+	void testModifyEmployee() {
+		EmployeeVO emp = new EmployeeVO();
+		emp.setEmpId("test");
+		emp.setEmpPass("1234");
+		service.modifyEmployee(emp);
+	}
+
+	@Disabled
+	@Test // 성공
+	void testModifyStatusEmployee() {
+		service.modifyStatusEmployee("kimny950111@gmail.com");
+	}
+	
+	@Disabled
+	@Test
+	void testDeleteEmployee() {
+		fail("Not yet implemented");
+	}
+
+}

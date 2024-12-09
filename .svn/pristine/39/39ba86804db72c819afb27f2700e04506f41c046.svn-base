@@ -1,0 +1,47 @@
+/**
+ * 
+ */
+
+
+const myJoinModal = new bootstrap.Modal('#joinModal');
+const myFindPassModal = new bootstrap.Modal('#passFindModal');
+
+function openJoinModal() {
+	myJoinModal.show();
+}
+
+function openFindPassModal() {
+	myFindPassModal.show();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+	const contextPath = document.body.dataset.contextpath;
+	const pathName = window.location.pathname; // /work2gether/a001/login 이런식으로 들어옴
+	const regex = /\/work2gether\/([^/]+)/i;	// 정규식 /work2gether/{여기의 값을 꺼내옴}/이후 뎁스
+	const match = pathName.match(regex);
+	let companyId;
+	if (match && match[1]) {
+		companyId = match[1];
+	} else {
+		console.log("No match found");
+	}
+
+	
+
+	const joinModalForm = document.querySelector('#join-modal-form');
+	const findPassModalForm = document.querySelector('#join-modal-form');
+
+	
+	joinModalForm.addEventListener("submit", e => {
+		e.preventDefault();
+		let url = `${contextPath}/${companyId}/mailCheck`;
+		joinModalForm.action=url;
+		joinModalForm.submit();
+		
+		
+		
+
+	})
+		 
+
+})

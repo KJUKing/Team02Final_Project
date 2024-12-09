@@ -1,0 +1,16 @@
+package kr.or.ddit.roomReservation.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import kr.or.ddit.vo.RoomReservationVO;
+
+@Mapper
+public interface RoomReservationMapper {
+	public int insertRoomReser(RoomReservationVO roomReser);
+	public RoomReservationVO selectRoomReser(String reserId);
+	public List<RoomReservationVO> selectRoomReserList();
+	public int updateRoomReser(RoomReservationVO roomReser);
+	public int deleteRoomReser(String reserId);
+}

@@ -1,0 +1,47 @@
+package kr.or.ddit.question.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.commons.validate.InsertGroup;
+import kr.or.ddit.question.service.QuestionService;
+import kr.or.ddit.question.vo.QuestionVO;
+
+@Controller
+@RequestMapping("/{companyId}/question/new")
+public class QuestionInsertController {
+	
+	@Autowired
+	private QuestionService service;
+	
+	public static final String MODELNAME = "question";
+	
+	@ModelAttribute(MODELNAME)
+	public QuestionVO questionVo() {
+		return new QuestionVO();
+	}
+	
+	@GetMapping // 문의 게시판 작성 form 이동
+	public String questionInsertForm(@SessionAttribute String companyId) {
+		return "question/questionForm";
+	}
+	              
+	
+	@PostMapping	// 문의 게시판 - 게시글 등록
+	public String questionInsert(
+			@Validated(InsertGroup.class) @ModelAttribute(MODELNAME)QuestionVO questionVo
+			, @SessionAttribute String companyId
+			, BindingResult errors
+			, RedirectAttributes redirectAttributes) {
+		
+		return "";
+	}
+}

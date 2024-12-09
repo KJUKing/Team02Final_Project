@@ -1,0 +1,70 @@
+package kr.or.ddit.question.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import kr.or.ddit.commons.exception.BoardException;
+import kr.or.ddit.commons.validate.UpdateGroup;
+import kr.or.ddit.question.service.QuestionService;
+import kr.or.ddit.question.vo.QuestionVO;
+
+@Controller
+@RequestMapping("/{companyId}/question")
+public class QuestionModifyController {
+	public static final String MODELNAME = "targetQuestion";
+	
+	@Autowired
+	private QuestionService service;
+	
+	@GetMapping("/{quNo}/edit")	// 문의 게시판 - 게시글 수정 폼 이동
+	public String questionEditForm() {
+		return "question/questionEdit";
+	}
+	
+	@PostMapping("/{quNo}/edit")	// 문의 게시판 - 게시글 수정
+	public String questionUpdate(
+		@Validated(UpdateGroup.class) @ModelAttribute(MODELNAME) QuestionVO question,
+		BindingResult errors, RedirectAttributes redirectAttributes
+		) {
+		String lvn = null;
+		if (!errors.hasErrors()) {
+			try {
+				service.modifyQuestion(question);
+				lvn = "redirect:/board/{boNo}";
+			} catch (BoardException e) {
+				redirectAttributes.addFlashAttribute(MODELNAME, question);
+				redirectAttributes.addFlashAttribute("message", e.getMessage());
+				lvn = "redirect:/board/{boNo}/auth";
+			}
+		} else {
+			redirectAttributes.addFlashAttribute(MODELNAME, question);
+			redirectAttributes.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX, errors);
+			return "redirect:/board/{boNo}/edit";
+		}
+		question.setAtchFile(null);
+		return lvn;
+	}
+	
+	@DeleteMapping("/{quNo}")	// 문의 게시판 - 게시글 삭제
+	public String questionDelete(
+			@PathVariable String quNo
+			, RedirectAttributes redirectAttributes) {
+		try {
+			service.removeQuestion(quNo);
+			return "redirect:/question";
+		}catch (BoardException e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+			return "redirect:/question/{boNo}";
+		}
+	}
+
+}

@@ -1,0 +1,40 @@
+package kr.or.ddit.organitree.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.employee.vo.EmployeeVO;
+import kr.or.ddit.organitree.dao.OrganiTreeMapper;
+import kr.or.ddit.organitree.vo.DepartmentVO;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class OrganiTreeServiceImpl implements OrganiTreeService {
+	
+	
+	private final OrganiTreeMapper dao;
+	
+	@Override
+	public List<DepartmentVO> readOrganiList() {		
+		return dao.selectOrganiList();
+	}
+
+	@Override
+	public List<EmployeeVO> readOneOrganiList(String departCode) {
+		
+		return dao.selectOneOrganiList(departCode);
+	}
+
+	@Override
+	public EmployeeVO readOneEmployeeDetail(String empId) {
+		
+		return dao.selectOneEmployeeDetail(empId);
+	}
+
+
+	
+	
+
+}
